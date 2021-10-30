@@ -48,20 +48,29 @@ namespace CompLang.BLL.Services
 
         public async Task<Text> AddAsync(Text text, CancellationToken ct = default)
         {
-            var wordsAndSymbols = _parseTextService.ParseTextAsync(text.Content, ct);
             var textEntity = _mapper.Map<TextEntity>(text);
+
+            var taskResponse = _parseTextService.ParseTextAsync(text.Content);
+            
             textEntity = await _textProvider.CreateAsync(textEntity, ct);
-            foreach (var wordsOrSymbol in wordsAndSymbols.Result)
+            foreach (var wordsOrSymbol in taskResponse.Result.Words)
             {
-                var existingWord = await _wordProvider.GetByNameAsync(wordsOrSymbol, ct);
+                var existingWord = await _wordProvider.GetByNameAsync(wordsOrSymbol.Name, ct);
                 if(existingWord == null)
                 {
-                    existingWord = await _wordProvider.CreateAsync(wordsOrSymbol, ct);
+                    existingWord = await _wordProvider.CreateAsync(wordsOrSymbol.Name, ct);
                 }
-                var wordUsage = await _wordUsageProvider.CreateAsync(existingWord, textEntity, ct);
+                WordUsageEntity wordUsage = new WordUsageEntity
+                {
+                    Word = existingWord,
+                    Text = textEntity,
+                    Tag = wordsOrSymbol.Tag
+                };
+                wordUsage = await _wordUsageProvider.CreateAsync(wordUsage, ct);
+                
                 textEntity.WordUsages.Add(wordUsage);
             }
-            await _textProvider.UpdateAsync(textEntity, ct);
+            //await _textProvider.UpdateAsync(textEntity, ct);
             return text;
         }
     }

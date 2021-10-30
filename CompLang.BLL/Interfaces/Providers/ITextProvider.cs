@@ -1,5 +1,6 @@
 ﻿using CompLang.BLL.Models;
 using CompLang.DAL.Entities;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,5 +14,6 @@ namespace CompLang.BLL.Interfaces.Providers
         Task<TextEntity> CreateAsync(TextEntity entity, CancellationToken ct = default);
         Task<TextEntity> UpdateAsync(TextEntity entity, CancellationToken ct = default);
         Task<TextEntity> GetByTitleAsync(string title, bool toTrack = false, CancellationToken ct = default);
+        Task<IEnumerable<string>> GetAllTitlesAsync(CancellationToken ct = default);
     }
 }

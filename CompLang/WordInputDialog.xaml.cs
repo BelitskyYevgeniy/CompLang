@@ -16,20 +16,22 @@ namespace CompLang
 
         public string Word { get; private set; }
         public bool IsConfirmed => !string.IsNullOrWhiteSpace(Word);
+        public bool ToValidate { get; private set; }
 
-
-        public WordInputDialog(string title, string description, IWordProvider wordProvider)
+        public WordInputDialog(string title, string description, IWordProvider wordProvider, bool toValidate = false)
         {
             this._wordProvider = wordProvider;
             this._title = title;
             this._description = description;
+            this.ToValidate = toValidate;
             InitializeComponent();
+
         }
         private void OnLoad(object sender, EventArgs e)
         {
             Description.Text = _description;
             Title = _title;
-
+            ConfirmButton.IsEnabled = !ToValidate;
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
@@ -49,7 +51,10 @@ namespace CompLang
 
         private void WordTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            ConfirmButton.IsEnabled = _wordProvider.ValidateWord((sender as TextBox).Text);
+            if (ToValidate)
+            {
+                ConfirmButton.IsEnabled = _wordProvider.ValidateWord((sender as TextBox).Text);
+            }
         }
     }
 }

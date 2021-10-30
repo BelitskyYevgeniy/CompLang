@@ -9,6 +9,7 @@ namespace CompLang.BLL
     public enum SortType
     {
         Name,
-        Count
+        Count,
+        Tag
     }
 }

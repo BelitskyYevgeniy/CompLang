@@ -28,11 +28,13 @@
             <MenuItem Header="Edit">
                 <MenuItem Header="Create word" Click="CreateWord_Click"/>
                 <MenuItem Header="Edit word" Click="EditWord_Click"/>
+                <MenuItem Header="View words by text" Click="ViewText_Click"/>
                 <MenuItem Header="Delete word" Click="DeleteWord_Click"/>
             </MenuItem>
             <MenuItem Header="View">
                 <MenuItem Header="All words" Click="ViewAll_Click"/>
                 <MenuItem Header="Find by Name(operataion Like)" Click="FindLike_Click"/>
+                <MenuItem Header="View list of files" Click="ViewFilesList_Click"/>
             </MenuItem>
         </Menu>
         <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
@@ -51,8 +53,10 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn IsReadOnly="True" Width="300" Header="Name" Binding="{Binding Name}"/>
                     <DataGridTextColumn IsReadOnly="True" Width="300" Header="Count" Binding="{Binding Count}"/>
+                    <DataGridTextColumn IsReadOnly="True" Width="300" Header="Tag" Binding="{Binding Tag}"/>
                 </DataGrid.Columns>
             </DataGrid>
+            
             
     </Grid>
     

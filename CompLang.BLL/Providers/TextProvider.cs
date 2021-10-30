@@ -3,7 +3,9 @@ using CompLang.BLL.Interfaces.Providers;
 using CompLang.BLL.Models;
 using CompLang.DAL.Entities;
 using CompLang.DAL.Interfaces.Repository;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -48,8 +50,18 @@ namespace CompLang.BLL.Providers
         }
         public async Task<TextEntity> GetByTitleAsync(string title, CancellationToken ct = default)
         {
-            var texts = await _textRepository.FindAsync(filter: new Expression<Func<TextEntity, bool>>[] { e => e.Title == title }, ct: ct).ConfigureAwait(false);
-            return texts.FirstOrDefault();
+            var text = await _textRepository.GetByTitleAsync(title, false, ct);
+            return text;
+        }
+        public async Task<IEnumerable<string>> GetAllTitlesAsync(CancellationToken ct = default)
+        {
+            var texts = await _textRepository.GetAllAsync(ct: ct);
+            var result = new List<string>();
+            foreach(var text in texts)
+            {
+                result.Add(text.Title);
+            }
+            return result;
         }
     }
 }

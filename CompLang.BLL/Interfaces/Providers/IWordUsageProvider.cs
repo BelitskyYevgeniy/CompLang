@@ -6,7 +6,7 @@ namespace CompLang.BLL.Interfaces.Providers
 {
     public interface IWordUsageProvider
     {
-        Task<WordUsageEntity> CreateAsync(WordEntity word, TextEntity text, CancellationToken ct = default);
+        Task<WordUsageEntity> CreateAsync(WordUsageEntity entity, CancellationToken ct = default);
         Task<WordUsageEntity> UpdateAsync(WordUsageEntity entity, CancellationToken ct = default);
     }
 }

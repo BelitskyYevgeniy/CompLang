@@ -46,6 +46,7 @@ namespace CompLang
             services.AddServices();
 
             services.AddSingleton<MainWindow>();
+            services.AddSingleton<TextViewWindow>();
         }
 
 

@@ -1,10 +1,10 @@
-﻿using System.Threading;
+﻿using CompLang.BLL.Models.ParserResponse;
 using System.Threading.Tasks;
 
 namespace CompLang.BLL.Interfaces.Services
 {
     public interface IParseTextService
     {
-        Task<string[]> ParseTextAsync(string text, CancellationToken ct = default);
+        Task<ResultModelResponse> ParseTextAsync(string text);
     }
 }

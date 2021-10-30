@@ -11,5 +11,8 @@ namespace CompLang.DAL.Entities
 
         [Required]
         public TextEntity Text { get; set; }
+
+        [Required]
+        public string Tag { get; set; }
     }
 }

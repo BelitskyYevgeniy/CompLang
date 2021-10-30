@@ -19,12 +19,16 @@ namespace CompLang.DAL.Repository
         }
         public async Task<TextEntity> GetByTitleAsync(string title, bool toTrack = false, CancellationToken ct = default)
         {
-            var words = await FindAsync(
+            var text = (await FindAsync(
                 toTrack: toTrack,
                 filters: new Expression<Func<TextEntity, bool>>[] { entity => title == entity.Title },
                 include: q => q.Include(e => e.WordUsages).ThenInclude(e => e.Word),
-                ct: ct).ConfigureAwait(false);
-            return words.FirstOrDefault();
+                ct: ct).ConfigureAwait(false)).FirstOrDefault();
+            if (text != null)
+            {
+                text.WordUsages.OrderBy(e => e.Id);
+            }
+            return text;
         }
     }
 }

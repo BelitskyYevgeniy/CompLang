@@ -14,9 +14,9 @@ namespace CompLang.BLL.Providers
             this._wordUsageRepository = wordUsageRepository;
         }
 
-        public Task<WordUsageEntity> CreateAsync(WordEntity word, TextEntity text, CancellationToken ct = default)
+        public Task<WordUsageEntity> CreateAsync(WordUsageEntity entity, CancellationToken ct = default)
         {
-            return _wordUsageRepository.CreateAsync(new WordUsageEntity { Word = word, Text = text }, ct);
+            return _wordUsageRepository.CreateAsync(entity, ct);
         }
 
         public Task<WordUsageEntity> UpdateAsync(WordUsageEntity entity, CancellationToken ct = default)
